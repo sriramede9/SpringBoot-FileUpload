@@ -21,14 +21,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 @Controller
 @RequestMapping("/users")
 @Transactional
 public class UserController {
 	
     private static String UPLOADED_FOLDER = "C://temp//";
-    private Path samplePath;
+    private List<Path> samplePath=new ArrayList<>();
 
 
 	@Autowired
@@ -54,21 +56,25 @@ public class UserController {
 	}
 	
 	@PostMapping("/formaction")
-	public String formResponse(@ModelAttribute("u") User u,@RequestParam("file") MultipartFile file) {
+	public String formResponse(@ModelAttribute("u") User u,@RequestParam("file") MultipartFile[] file) {
 		
 		System.out.println("Here are the user details"+u);
-		System.out.println("The file is"+ file);
+		System.out.println("The file is"+ file.length); 
 		
-		if(file.isEmpty()) {System.out.println("No file uploaded");}
-		
-		 try {
+		Arrays.asList(file).stream().forEach(f->{
+			
+			if(f.isEmpty()) {System.out.println("No file uploaded");}
+			
+//			System.out.println(f);
+			
+			try {
 
 	            // Get the file and save it somewhere
-	            byte[] bytes = file.getBytes();
-	            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+	            byte[] bytes = f.getBytes();
+	            Path path = Paths.get(UPLOADED_FOLDER + f.getOriginalFilename());
 	            
 	            System.out.println("Path is \t"+ path);
-	            this.samplePath=path;
+	            this.samplePath.add(path);
 	            Files.write(path, bytes);
 
 //	            redirectAttributes.addFlashAttribute("message",
@@ -77,6 +83,13 @@ public class UserController {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+			
+			
+		});
+		
+		
+		
+		 
 		
 		return "redirect:/users/getimage";
 	} 

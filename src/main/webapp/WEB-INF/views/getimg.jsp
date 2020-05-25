@@ -20,5 +20,22 @@
 <img alt="testImage" src='C://temp//adp_details.PNG'>
 
 
+
+<h1>${path}</h1>
+
+ <table>
+            <c:forEach items="${files}" var="file">    
+                <tr>
+                    <td>OriginalFileName:</td>
+                    <td>${file.originalFilename}</td>
+                </tr>
+                <tr>
+                    <td>Type:</td>
+                    <td>${file.contentType}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
+
 </body>
 </html>

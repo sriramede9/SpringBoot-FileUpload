@@ -23,7 +23,12 @@
          <tr>
             <td>Upload Image:</td>
             <td>
-                <input type="file" name="file" />
+                <input type="file" name='file' />
+            </td>
+             <tr>
+            <td>Upload Image:</td>
+            <td>
+                <input type="file" name='file' />
             </td>
         </tr>
            <tr>
