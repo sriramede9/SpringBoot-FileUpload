@@ -24,16 +24,25 @@
 <h1>${path}</h1>
 
  <table>
-            <c:forEach items="${files}" var="file">    
+            <c:forEach items="${path}" var="file">    
                 <tr>
                     <td>OriginalFileName:</td>
-                    <td>${file.originalFilename}</td>
+                    <td>${file}</td>
                 </tr>
                 <tr>
                     <td>Type:</td>
-                    <td>${file.contentType}</td>
+                    <td></td>
                 </tr>
             </c:forEach>
+            
+            
+  <%--           <%
+   String[] colors = ${path};
+   for (int i = 0; i < colors.length; i++) {
+      out.print("<P>" + colors[i] + "</p>");
+   }
+%> --%>
+            
         </table>
 
 

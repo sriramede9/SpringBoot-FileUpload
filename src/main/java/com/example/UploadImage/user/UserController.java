@@ -3,6 +3,7 @@ package com.example.UploadImage.user;
 import javax.transaction.Transactional;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class UserController {
 	
     private static String UPLOADED_FOLDER = "C://temp//";
     private List<Path> samplePath=new ArrayList<>();
+//    private List<Path> samplePath=new ArrayList<>();
 
 
 	@Autowired
@@ -74,6 +76,8 @@ public class UserController {
 	            Path path = Paths.get(UPLOADED_FOLDER + f.getOriginalFilename());
 	            
 	            System.out.println("Path is \t"+ path);
+//	            u.setPath(path);
+	            
 	            this.samplePath.add(path);
 	            Files.write(path, bytes);
 
@@ -88,8 +92,19 @@ public class UserController {
 		});
 		
 		
-		
+		this.samplePath.stream().forEach(p->{
+			System.out.println("Here are the paths"+p);
+		});
 		 
+//		String[] strings = this.samplePath.stream().toArray(String[]::new);
+		String[] strings=new String[this.samplePath.size()];
+		
+		strings[0]="C:\\temp\\Encapsulation.PNG";
+		strings[1]="C:\\temp\\Encapsulation2.PNG";
+		
+		u.setPath(strings);
+		
+		userService.saveUser(u);
 		
 		return "redirect:/users/getimage";
 	} 
@@ -97,9 +112,11 @@ public class UserController {
 	@GetMapping("/getimage")
 	public String getImage(Model model) {
 		
-		model.addAttribute("path", samplePath);
+		User u=userService.getUser(1);
+		
+		model.addAttribute("path", u.getPath());
 		
 		return "getimg";
-	}
-}  
+	}  
+}   
  
